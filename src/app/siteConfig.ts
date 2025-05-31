@@ -1,7 +1,7 @@
 export const siteConfig = {
-  name: "Dashboard",
-  url: "https://dashboard.tremor.so",
-  description: "The only dashboard you will ever need.",
+  name: "Tyron Dashboard",
+  url: "https://dashboard.tyrondao.org",
+  description: "Be Your Own Bank with Tyron",
   baseLinks: {
     home: "/",
     overview: "/overview",
@@ -9,7 +9,8 @@ export const siteConfig = {
     settings: {
       general: "/settings/general",
       billing: "/settings/billing",
-      users: "/settings/users",
+      guardians: "/settings/guardians",
+      boxes: "/settings/boxes",
     },
   },
 }
