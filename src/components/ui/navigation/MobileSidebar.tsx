@@ -25,15 +25,20 @@ const navigation = [
   { name: "Details", href: siteConfig.baseLinks.details, icon: RiListCheck },
   {
     name: "Settings",
-    href: siteConfig.baseLinks.settings.general,
+    href: siteConfig.baseLinks.settings.boxes,
     icon: RiSettings5Line,
   },
 ] as const
 
 const shortcuts = [
   {
-    name: "Add new user",
-    href: "/settings/users",
+    name: "Add new box",
+    href: "/settings/boxes",
+    icon: RiLinkM,
+  },
+  {
+    name: "Add new guardian",
+    href: "/settings/guardians",
     icon: RiLinkM,
   },
   {
@@ -56,7 +61,7 @@ const shortcuts = [
 export default function MobileSidebar() {
   const pathname = usePathname()
   const isActive = (itemHref: string) => {
-    if (itemHref === siteConfig.baseLinks.settings.general) {
+    if (itemHref === siteConfig.baseLinks.settings.boxes) {
       return pathname.startsWith("/settings")
     }
     return pathname === itemHref || pathname.startsWith(itemHref)
@@ -78,7 +83,7 @@ export default function MobileSidebar() {
         </DrawerTrigger>
         <DrawerContent className="sm:max-w-lg">
           <DrawerHeader>
-            <DrawerTitle>Retail Analytics</DrawerTitle>
+            <DrawerTitle>Tyron Account</DrawerTitle>
           </DrawerHeader>
           <DrawerBody>
             <nav
