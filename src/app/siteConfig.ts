@@ -6,6 +6,12 @@ export const siteConfig = {
     home: "/",
     overview: "/overview",
     details: "/details",
+    account: {
+      box: "/account/box",
+      deposit: {
+        bitcoin: "/account/deposit/bitcoin",
+      },
+    },
     settings: {
       general: "/settings/general",
       billing: "/settings/billing",

@@ -1,8 +1,13 @@
 import type { Config } from "tailwindcss"
 
 const config: Config = {
-  darkMode: "selector",
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  darkMode: "class",
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -25,6 +30,16 @@ const config: Config = {
         slideRightAndFade: {
           from: { opacity: "0", transform: "translateX(-6px)" },
           to: { opacity: "1", transform: "translateX(0)" },
+        },
+        accordionOpen: {
+          from: { height: "0px" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        accordionClose: {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: { height: "0px" },
         },
         dialogOverlayShow: {
           from: { opacity: "0" },
@@ -51,12 +66,16 @@ const config: Config = {
         slideUpAndFade: "slideUpAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         slideRightAndFade:
           "slideRightAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-        drawerSlideLeftAndFade:
-          "drawerSlideLeftAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        // Accordion
+        accordionOpen: "accordionOpen 150ms cubic-bezier(0.87, 0, 0.13, 1)",
+        accordionClose: "accordionClose 150ms cubic-bezier(0.87, 0, 0.13, 1)",
+        // Dialog
         dialogOverlayShow:
           "dialogOverlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         dialogContentShow:
           "dialogContentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        drawerSlideLeftAndFade:
+          "drawerSlideLeftAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },
