@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation"
 const navigationSettings = [
   { name: "Safety Deposit ₿ox", href: siteConfig.baseLinks.account.box },
   {
-    name: "Bitcoin Deposits",
+    name: "Deposits",
     href: siteConfig.baseLinks.account.deposit.bitcoin,
   },
 ]
