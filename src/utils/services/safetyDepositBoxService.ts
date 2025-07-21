@@ -210,7 +210,7 @@ export function formatBoxFormData(
   addressType: string,
   currency: string,
 ): CreateBoxFormData {
-  const version = process.env.NEXT_PUBLIC_SYRON_VERSION || "1"
+  const version = process.env.NEXT_PUBLIC_SYRON_VERSION || "testnet"
 
   return {
     addressType: addressType as "segwit" | "taproot",
