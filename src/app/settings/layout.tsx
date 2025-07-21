@@ -7,9 +7,9 @@ import { usePathname } from "next/navigation"
 
 const navigationSettings = [
   { name: "New Deposit ₿ox", href: siteConfig.baseLinks.settings.boxes },
-  { name: "General", href: siteConfig.baseLinks.settings.general },
-  { name: "Billing & Usage", href: siteConfig.baseLinks.settings.billing },
   { name: "Guardians", href: siteConfig.baseLinks.settings.guardians },
+  //{ name: "General", href: siteConfig.baseLinks.settings.general },
+  //{ name: "Billing & Usage", href: siteConfig.baseLinks.settings.billing },
 ]
 
 export default function Layout({

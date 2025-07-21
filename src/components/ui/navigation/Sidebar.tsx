@@ -1,12 +1,7 @@
 "use client"
 import { siteConfig } from "@/app/siteConfig"
+import { navigation, shortcuts } from "@/constants/SidebarConstants"
 import { cx, focusRing } from "@/lib/utils"
-import {
-  RiHome2Line,
-  RiLinkM,
-  RiListCheck,
-  RiSettings5Line,
-} from "@remixicon/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import MobileSidebar from "./MobileSidebar"
@@ -15,44 +10,6 @@ import {
   WorkspacesDropdownMobile,
 } from "./SidebarWorkspacesDropdown"
 import { UserProfileDesktop, UserProfileMobile } from "./UserProfile"
-
-const navigation = [
-  { name: "Overview", href: siteConfig.baseLinks.overview, icon: RiHome2Line },
-  { name: "Details", href: siteConfig.baseLinks.details, icon: RiListCheck },
-  {
-    name: "Settings",
-    href: siteConfig.baseLinks.settings.boxes,
-    icon: RiSettings5Line,
-  },
-] as const
-
-const shortcuts = [
-  {
-    name: "Add new box",
-    href: "/settings/boxes",
-    icon: RiLinkM,
-  },
-  {
-    name: "Add new guardian",
-    href: "/settings/guardians",
-    icon: RiLinkM,
-  },
-  {
-    name: "Workspace usage",
-    href: "/settings/billing#billing-overview",
-    icon: RiLinkM,
-  },
-  {
-    name: "Cost spend control",
-    href: "/settings/billing#cost-spend-control",
-    icon: RiLinkM,
-  },
-  {
-    name: "Overview – Rows written",
-    href: "/overview#usage-overview",
-    icon: RiLinkM,
-  },
-] as const
 
 export function Sidebar() {
   const pathname = usePathname()
