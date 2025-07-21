@@ -65,6 +65,8 @@ export function WalletConnectModal({
             <Image
               src={logoSrc}
               alt="TyronDAO logotype"
+              width={200}
+              height={48}
               className="mb-1 h-10 w-auto sm:h-12"
             />
             <DialogDescription className="-mt-1 text-center text-xs text-orange-400 drop-shadow-[0_0_6px_rgba(245,145,27,0.5)] sm:text-sm">

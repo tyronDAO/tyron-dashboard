@@ -55,34 +55,8 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   const setSelectedBoxId = useAppStore((s) => s.setSelectedBoxId)
   const selectedBoxId = useAppStore((s) => s.selectedBoxId)
 
-  // Convert SafetyDepositBox to Workspace format
-  const convertBoxToWorkspace = (box: SafetyDepositBox): Workspace => {
-    // Get currency info for display
-    const currencyInfo = database_boxes.find(
-      (db) => db.currency === box.currency,
-    )
-
-    // Truncate the box address to show first 10 characters + "..."
-    const truncatedAddress =
-      box.boxAddress.length > 13
-        ? `${box.boxAddress.substring(0, 10)}...`
-        : box.boxAddress
-
-    return {
-      value: box.syronId,
-      name: currencyInfo?.label!, // `${currencyInfo?.label || box.currency} (${addressTypeLabel})`,
-      initials: currencyInfo?.iso!,
-      role: truncatedAddress, // Truncated box address
-      color: getColorForCurrency(box.currency),
-      boxData: {
-        ...box,
-        iso: currencyInfo?.iso, // Include ISO code in boxData
-      },
-    }
-  }
-
   // Get color for currency
-  const getColorForCurrency = (currency: string): string => {
+  const getColorForCurrency = React.useCallback((currency: string): string => {
     const colors = [
       "bg-indigo-600 dark:bg-indigo-500",
       "bg-purple-600 dark:bg-purple-500",
@@ -94,7 +68,36 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
 
     const index = database_boxes.findIndex((db) => db.currency === currency)
     return colors[index % colors.length]
-  }
+  }, [])
+
+  // Convert SafetyDepositBox to Workspace format
+  const convertBoxToWorkspace = React.useCallback(
+    (box: SafetyDepositBox): Workspace => {
+      // Get currency info for display
+      const currencyInfo = database_boxes.find(
+        (db) => db.currency === box.currency,
+      )
+
+      // Truncate the box address to show first 10 characters + "..."
+      const truncatedAddress =
+        box.boxAddress.length > 13
+          ? `${box.boxAddress.substring(0, 10)}...`
+          : box.boxAddress
+
+      return {
+        value: box.syronId,
+        name: currencyInfo?.label!, // `${currencyInfo?.label || box.currency} (${addressTypeLabel})`,
+        initials: currencyInfo?.iso!,
+        role: truncatedAddress, // Truncated box address
+        color: getColorForCurrency(box.currency),
+        boxData: {
+          ...box,
+          iso: currencyInfo?.iso, // Include ISO code in boxData
+        },
+      }
+    },
+    [getColorForCurrency],
+  )
 
   // Load user's Safety Deposit ₿oxes
   const loadWorkspaces = React.useCallback(
