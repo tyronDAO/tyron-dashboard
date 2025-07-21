@@ -5,6 +5,8 @@ import "./globals.css"
 import { siteConfig } from "./siteConfig"
 
 import { Sidebar } from "@/components/ui/navigation/Sidebar"
+import { WalletProvider } from "@/contexts/WalletContext"
+import { WorkspaceProvider } from "@/contexts/WorkspaceContext"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,17 +15,17 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yoururl.com"),
+  metadataBase: new URL("https://app.tyrondao.org"),
   title: siteConfig.name,
   description: siteConfig.description,
   keywords: [],
   authors: [
     {
-      name: "yourname",
-      url: "",
+      name: "TyronDAO",
+      url: new URL("https://tyrondao.org"),
     },
   ],
-  creator: "yourname",
+  creator: "TyronDAO",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -50,8 +52,12 @@ export default function RootLayout({
       >
         <div className="mx-auto max-w-screen-2xl">
           <ThemeProvider defaultTheme="system" attribute="class">
-            <Sidebar />
-            <main className="lg:pl-72">{children}</main>
+            <WalletProvider>
+              <WorkspaceProvider>
+                <Sidebar />
+                <main className="lg:pl-72">{children}</main>
+              </WorkspaceProvider>
+            </WalletProvider>
           </ThemeProvider>
         </div>
       </body>
