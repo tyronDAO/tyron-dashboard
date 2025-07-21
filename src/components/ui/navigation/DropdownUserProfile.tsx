@@ -14,6 +14,8 @@ import {
   DropdownMenuSubMenuTrigger,
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
+import { WalletConnectModal } from "@/components/ui/wallet/WalletConnectModal"
+import { useWallet } from "@/contexts/WalletContext"
 import {
   RiArrowRightUpLine,
   RiComputerLine,
@@ -33,7 +35,11 @@ export function DropdownUserProfile({
   align = "start",
 }: DropdownUserProfileProps) {
   const [mounted, setMounted] = React.useState(false)
+  const [language, setLanguage] = React.useState("en")
+  const [walletModalOpen, setWalletModalOpen] = React.useState(false)
   const { theme, setTheme } = useTheme()
+  const { isWalletConnected, disconnectWallet } = useWallet()
+
   React.useEffect(() => {
     setMounted(true)
   }, [])
@@ -41,13 +47,40 @@ export function DropdownUserProfile({
   if (!mounted) {
     return null
   }
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
         <DropdownMenuContent align={align}>
-          <DropdownMenuLabel>emma.stone@acme.com</DropdownMenuLabel>
+          <DropdownMenuLabel>Be Your Own ₿ank</DropdownMenuLabel>
           <DropdownMenuGroup>
+            <DropdownMenuSubMenu>
+              <DropdownMenuSubMenuTrigger>Language</DropdownMenuSubMenuTrigger>
+              <DropdownMenuSubMenuContent>
+                <DropdownMenuRadioGroup
+                  value={language}
+                  onValueChange={(value) => {
+                    setLanguage(value)
+                  }}
+                >
+                  <DropdownMenuRadioItem
+                    aria-label="Switch to English"
+                    value="en"
+                    iconType="check"
+                  >
+                    English
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem
+                    aria-label="Switch to Spanish"
+                    value="es"
+                    iconType="check"
+                  >
+                    Spanish
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubMenuContent>
+            </DropdownMenuSubMenu>
             <DropdownMenuSubMenu>
               <DropdownMenuSubMenuTrigger>Theme</DropdownMenuSubMenuTrigger>
               <DropdownMenuSubMenuContent>
@@ -94,33 +127,95 @@ export function DropdownUserProfile({
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              Changelog
-              <RiArrowRightUpLine
-                className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
-                aria-hidden="true"
-              />
+              <a
+                href="https://t.me/tyrondao"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center"
+              >
+                Telegram
+                <RiArrowRightUpLine
+                  className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
+                  aria-hidden="true"
+                />
+              </a>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              Documentation
-              <RiArrowRightUpLine
-                className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
-                aria-hidden="true"
-              />
+              <a
+                href="https://blog.tyrondao.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center"
+              >
+                Blog
+                <RiArrowRightUpLine
+                  className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
+                  aria-hidden="true"
+                />
+              </a>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              Join Slack community
-              <RiArrowRightUpLine
-                className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
-                aria-hidden="true"
-              />
+              <a
+                href="https://docs.tyrondao.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center"
+              >
+                Documentation
+                <RiArrowRightUpLine
+                  className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
+                  aria-hidden="true"
+                />
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <a
+                href="https://bsky.app/profile/tyrondao.bsky.social"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center"
+              >
+                Bluesky
+                <RiArrowRightUpLine
+                  className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
+                  aria-hidden="true"
+                />
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <a
+                href="https://tyrondao.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center"
+              >
+                TyronDAO
+                <RiArrowRightUpLine
+                  className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
+                  aria-hidden="true"
+                />
+              </a>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            {isWalletConnected ? (
+              <DropdownMenuItem onClick={disconnectWallet}>
+                Sign out
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem onClick={() => setWalletModalOpen(true)}>
+                Sign in
+              </DropdownMenuItem>
+            )}
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <WalletConnectModal
+        open={walletModalOpen}
+        onOpenChange={setWalletModalOpen}
+      />
     </>
   )
 }

@@ -3,6 +3,7 @@ import { CategoryBarCard } from "@/components/ui/overview/DashboardCategoryBarCa
 import { ChartCard } from "@/components/ui/overview/DashboardChartCard"
 import { Filterbar } from "@/components/ui/overview/DashboardFilterbar"
 import { ProgressBarCard } from "@/components/ui/overview/DashboardProgressBarCard"
+import { WalletDashboard } from "@/components/ui/wallet/WalletInfo"
 import { overviews } from "@/data/overview-data"
 import { OverviewData } from "@/data/schema"
 import { cx } from "@/lib/utils"
@@ -153,10 +154,11 @@ export default function Overview() {
 
   return (
     <>
+      <WalletDashboard />
       <section aria-labelledby="current-billing-cycle">
         <h1
           id="current-billing-cycle"
-          className="scroll-mt-10 text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50"
+          className="scroll-mt-10 text-lg font-semibold text-gray-900 dark:text-gray-50 sm:text-xl"
         >
           Current billing cycle
         </h1>
@@ -197,11 +199,11 @@ export default function Overview() {
       <section aria-labelledby="usage-overview">
         <h1
           id="usage-overview"
-          className="mt-16 scroll-mt-8 text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50"
+          className="mt-16 scroll-mt-8 text-lg font-semibold text-gray-900 dark:text-gray-50 sm:text-xl"
         >
           Overview
         </h1>
-        <div className="sticky top-16 z-20 flex items-center justify-between border-b border-gray-200 bg-white pb-4 pt-4 sm:pt-6 lg:top-0 lg:mx-0 lg:px-0 lg:pt-8 dark:border-gray-800 dark:bg-gray-950">
+        <div className="sticky top-16 z-20 flex items-center justify-between border-b border-gray-200 bg-white pb-4 pt-4 dark:border-gray-800 dark:bg-gray-950 sm:pt-6 lg:top-0 lg:mx-0 lg:px-0 lg:pt-8">
           <Filterbar
             maxDate={maxDate}
             minDate={new Date(2024, 0, 1)}
