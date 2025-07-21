@@ -68,6 +68,8 @@ export function WalletConnectModal({
               width={200}
               height={48}
               className="mb-1 h-10 w-auto sm:h-12"
+              priority // Preloads the image for faster display
+              sizes="(max-width: 640px) 150px, 200px" // Loads a smaller image on mobile
             />
             <DialogDescription className="-mt-1 text-center text-xs text-orange-400 drop-shadow-[0_0_6px_rgba(245,145,27,0.5)] sm:text-sm">
               Be Your Own ₿ank
