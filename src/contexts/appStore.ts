@@ -35,10 +35,12 @@ type AppState = {
   safetyDepositBoxes: SafetyDepositBox[]
   transactions: Transaction[]
   selectedBoxId: string | null
+  timeoutMinutes: number
   setWalletInfo: (info: WalletInfo | null) => void
   setSafetyDepositBoxes: (boxes: SafetyDepositBox[]) => void
   setTransactions: (txs: Transaction[]) => void
   setSelectedBoxId: (id: string | null) => void
+  setTimeoutMinutes: (min: number) => void
   clearAll: () => void
 }
 
@@ -49,11 +51,13 @@ export const useAppStore = create<AppState>()(
       safetyDepositBoxes: [],
       transactions: [],
       selectedBoxId: null,
+      timeoutMinutes: 15,
       setWalletInfo: (info: WalletInfo | null) => set({ walletInfo: info }),
       setSafetyDepositBoxes: (boxes: SafetyDepositBox[]) =>
         set({ safetyDepositBoxes: boxes }),
       setTransactions: (txs: Transaction[]) => set({ transactions: txs }),
       setSelectedBoxId: (id: string | null) => set({ selectedBoxId: id }),
+      setTimeoutMinutes: (min: number) => set({ timeoutMinutes: min }),
       clearAll: () => {
         console.log("🧹 Zustand clearAll called")
         set({
@@ -64,12 +68,24 @@ export const useAppStore = create<AppState>()(
         })
         console.log("🧹 Zustand clearAll completed")
 
-        // Also clear localStorage immediately to prevent persistence
-        localStorage.removeItem("tyron-app-storage")
         sessionStorage.clear()
-        console.log("🧹 Storage cleared immediately")
+        console.log("🧹 sessionStorage cleared immediately")
       },
     }),
-    { name: "tyron-app-storage" },
+    {
+      name: "tyron-app-storage",
+      storage: {
+        getItem: (name) => {
+          const item = sessionStorage.getItem(name)
+          return item ? JSON.parse(item) : null
+        },
+        setItem: (name, value) => {
+          sessionStorage.setItem(name, JSON.stringify(value))
+        },
+        removeItem: (name) => {
+          sessionStorage.removeItem(name)
+        },
+      },
+    },
   ),
 )

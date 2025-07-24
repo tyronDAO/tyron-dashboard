@@ -63,9 +63,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       console.log("✅ Wallet service disconnected")
 
       // Clear storage FIRST to prevent persistence
-      localStorage.removeItem("tyron-app-storage")
-      localStorage.removeItem("wallet-connection")
-      localStorage.removeItem("wallet-info")
       sessionStorage.clear()
       console.log("✅ Storage cleared first")
 
@@ -81,22 +78,14 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       // Explicitly clear selected box to ensure UI updates
       useAppStore.getState().setSelectedBoxId(null)
       console.log("✅ Selected box explicitly cleared")
-
-      // Wait a moment before reload to ensure all state is cleared
-      setTimeout(() => {
-        console.log("🔄 Reloading page...")
-        window.location.reload()
-      }, 100)
     } catch (err) {
       console.error("❌ Wallet disconnection error:", err)
-      // Even if there's an error, try to clear state and reload
-      localStorage.removeItem("tyron-app-storage")
+      // Even if there's an error, try to clear state
       sessionStorage.clear()
       setWalletInfo(null)
       setError(null)
       useAppStore.getState().clearAll()
       useAppStore.getState().setSelectedBoxId(null)
-      setTimeout(() => window.location.reload(), 100)
     }
   }
 
@@ -112,7 +101,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       setError(null)
       useAppStore.getState().clearAll()
       useAppStore.getState().setSelectedBoxId(null)
-      localStorage.removeItem("tyron-app-storage")
+      sessionStorage.clear()
     }
 
     // Subscribe to wallet events
@@ -132,7 +121,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       console.log("🔄 Checking for wallet state restoration...")
 
       // Check if there's persisted wallet info
-      const persistedState = localStorage.getItem("tyron-app-storage")
+      const persistedState = sessionStorage.getItem("tyron-app-storage")
       if (!persistedState) {
         console.log("ℹ️ No persisted wallet state found")
         return
@@ -151,7 +140,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
         if (walletService.isDemoAddress(persistedWallet.address)) {
           console.log("🚫 Demo account found in persistence, clearing...")
           useAppStore.getState().clearAll()
-          localStorage.removeItem("tyron-app-storage")
           sessionStorage.clear()
           return
         }
@@ -227,13 +215,11 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
           "ℹ️ Persisted wallet is no longer connected, clearing state...",
         )
         useAppStore.getState().clearAll()
-        localStorage.removeItem("tyron-app-storage")
         sessionStorage.clear()
       } catch (err) {
         console.error("❌ Error parsing persisted state:", err)
         // Clear corrupted state
         useAppStore.getState().clearAll()
-        localStorage.removeItem("tyron-app-storage")
         sessionStorage.clear()
       }
     }

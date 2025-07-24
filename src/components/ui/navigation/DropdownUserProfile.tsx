@@ -16,6 +16,7 @@ import {
 } from "@/components/Dropdown"
 import { WalletConnectModal } from "@/components/ui/wallet/WalletConnectModal"
 import { useWallet } from "@/contexts/WalletContext"
+import { useAppStore } from "@/contexts/appStore"
 import {
   RiArrowRightUpLine,
   RiComputerLine,
@@ -39,6 +40,8 @@ export function DropdownUserProfile({
   const [walletModalOpen, setWalletModalOpen] = React.useState(false)
   const { theme, setTheme } = useTheme()
   const { isWalletConnected, disconnectWallet } = useWallet()
+  const timeoutMinutes = useAppStore((s) => s.timeoutMinutes)
+  const setTimeoutMinutes = useAppStore((s) => s.setTimeoutMinutes)
 
   React.useEffect(() => {
     setMounted(true)
@@ -199,6 +202,35 @@ export function DropdownUserProfile({
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
+            <DropdownMenuSubMenu>
+              <DropdownMenuSubMenuTrigger>
+                Auto logout
+              </DropdownMenuSubMenuTrigger>
+              <DropdownMenuSubMenuContent>
+                <DropdownMenuRadioGroup
+                  value={String(timeoutMinutes)}
+                  onValueChange={(value) => {
+                    setTimeoutMinutes(Number(value))
+                  }}
+                >
+                  <DropdownMenuRadioItem value="2" iconType="check">
+                    2 minutes
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="5" iconType="check">
+                    5 minutes
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="10" iconType="check">
+                    10 minutes
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="15" iconType="check">
+                    15 minutes
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="30" iconType="check">
+                    30 minutes
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubMenuContent>
+            </DropdownMenuSubMenu>
             {isWalletConnected ? (
               <DropdownMenuItem onClick={disconnectWallet}>
                 Sign out

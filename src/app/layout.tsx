@@ -7,6 +7,15 @@ import { siteConfig } from "./siteConfig"
 import { Sidebar } from "@/components/ui/navigation/Sidebar"
 import { WalletProvider } from "@/contexts/WalletContext"
 import { WorkspaceProvider } from "@/contexts/WorkspaceContext"
+import dynamic from "next/dynamic"
+
+const AutoLogoutProvider = dynamic(
+  () =>
+    import("@/components/AutoLogoutProvider").then(
+      (mod) => mod.AutoLogoutProvider,
+    ),
+  { ssr: false },
+)
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,7 +24,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://app.tyrondao.org"),
+  metadataBase: new URL("https://dash.tyrondao.org"),
   title: siteConfig.name,
   description: siteConfig.description,
   keywords: [],
@@ -53,10 +62,12 @@ export default function RootLayout({
         <div className="mx-auto max-w-screen-2xl">
           <ThemeProvider defaultTheme="system" attribute="class">
             <WalletProvider>
-              <WorkspaceProvider>
-                <Sidebar />
-                <main className="lg:pl-72">{children}</main>
-              </WorkspaceProvider>
+              <AutoLogoutProvider>
+                <WorkspaceProvider>
+                  <Sidebar />
+                  <main className="lg:pl-72">{children}</main>
+                </WorkspaceProvider>
+              </AutoLogoutProvider>
             </WalletProvider>
           </ThemeProvider>
         </div>

@@ -67,7 +67,7 @@ export function WalletConnectModal({
               alt="TyronDAO logotype"
               width={200}
               height={48}
-              className="mb-1 h-10 w-auto sm:h-12"
+              className="mb-1 h-auto w-[200px] sm:w-[150px]"
               priority // Preloads the image for faster display
               sizes="(max-width: 640px) 150px, 200px" // Loads a smaller image on mobile
             />
